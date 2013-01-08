@@ -1,4 +1,4 @@
-from django.contrib import databrowse
+import django_databrowse
 from django.db import models
 from django.test import TestCase
 
@@ -27,33 +27,33 @@ class YetAnotherModel(models.Model):
 class DatabrowseTests(TestCase):
 
     def test_databrowse_register_unregister(self):
-        databrowse.site.register(SomeModel)
-        self.assertTrue(SomeModel in databrowse.site.registry)
-        databrowse.site.register(SomeOtherModel, YetAnotherModel)
-        self.assertTrue(SomeOtherModel in databrowse.site.registry)
-        self.assertTrue(YetAnotherModel in databrowse.site.registry)
+        django_databrowse.site.register(SomeModel)
+        self.assertTrue(SomeModel in django_databrowse.site.registry)
+        django_databrowse.site.register(SomeOtherModel, YetAnotherModel)
+        self.assertTrue(SomeOtherModel in django_databrowse.site.registry)
+        self.assertTrue(YetAnotherModel in django_databrowse.site.registry)
 
         self.assertRaisesMessage(
-            databrowse.sites.AlreadyRegistered,
+            django_databrowse.sites.AlreadyRegistered,
             'The model SomeModel is already registered',
-            databrowse.site.register, SomeModel, SomeOtherModel
+            django_databrowse.site.register, SomeModel, SomeOtherModel
         )
 
-        databrowse.site.unregister(SomeOtherModel)
-        self.assertFalse(SomeOtherModel in databrowse.site.registry)
-        databrowse.site.unregister(SomeModel, YetAnotherModel)
-        self.assertFalse(SomeModel in databrowse.site.registry)
-        self.assertFalse(YetAnotherModel in databrowse.site.registry)
+        django_databrowse.site.unregister(SomeOtherModel)
+        self.assertFalse(SomeOtherModel in django_databrowse.site.registry)
+        django_databrowse.site.unregister(SomeModel, YetAnotherModel)
+        self.assertFalse(SomeModel in django_databrowse.site.registry)
+        self.assertFalse(YetAnotherModel in django_databrowse.site.registry)
 
         self.assertRaisesMessage(
-            databrowse.sites.NotRegistered,
+            django_databrowse.sites.NotRegistered,
             'The model SomeModel is not registered',
-            databrowse.site.unregister, SomeModel, SomeOtherModel
+            django_databrowse.site.unregister, SomeModel, SomeOtherModel
         )
 
         self.assertRaisesMessage(
-            databrowse.sites.AlreadyRegistered,
+            django_databrowse.sites.AlreadyRegistered,
             'The model SomeModel is already registered',
-            databrowse.site.register, SomeModel, SomeModel
+            django_databrowse.site.register, SomeModel, SomeModel
         )
 

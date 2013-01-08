@@ -1,6 +1,6 @@
 from django import http
 from django.db import models
-from django.contrib.databrowse.datastructures import EasyModel
+from django_databrowse.datastructures import EasyModel
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 

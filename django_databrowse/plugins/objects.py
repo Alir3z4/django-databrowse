@@ -1,6 +1,6 @@
 from django import http
-from django.contrib.databrowse.datastructures import EasyModel
-from django.contrib.databrowse.sites import DatabrowsePlugin
+from django_databrowse.datastructures import EasyModel
+from django_databrowse.sites import DatabrowsePlugin
 from django.shortcuts import render_to_response
 import urlparse
 

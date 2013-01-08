@@ -1,5 +1,5 @@
 from django.conf.urls import patterns
-from django.contrib.databrowse import views
+from django_databrowse import views
 
 # Note: The views in this URLconf all require a 'models' argument,
 # which is a list of model classes (*not* instances).

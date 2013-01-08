@@ -16,4 +16,4 @@ def choice_detail(request, app_label, module_name, field_name, field_val, models
     except KeyError:
         raise Http404('Invalid choice value given')
     obj_list = m.objects(**{f.field.name: field_val})
-    return render_to_response('databrowse/choice_detail.html', {'model': m, 'field': f, 'value': label, 'object_list': obj_list})
+    return render_to_response('databrowse/choice_detail.html',{'model': m, 'field': f, 'value': label, 'object_list': obj_list})
