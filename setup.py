@@ -18,7 +18,7 @@ setup(
     maintainer=MY_NAME,
     maintainer_email=MY_EMAIL,
     description='Databrowse is a Django application that lets you browse your data.',
-    long_description=open('README.rst'),
+    long_description=open('README.rst').read(),
     install_requires=['django',],
     keywords=[
         'django',
