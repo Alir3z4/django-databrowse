@@ -1,0 +1,15 @@
+# IDE specific
+.idea/
+# file
+*.pyc
+manage.py
+dump.json
+MANIFEST
+# dir
+build/
+dist/
+*.egg-info/
+logs/
+src/
+media/
+django_databrowse_project/
