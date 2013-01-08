@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+# Empty models.py to allow for specifying databrowse as a test label.
