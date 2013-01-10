@@ -56,17 +56,27 @@ class ModelDatabrowse(object):
         try:
             plugin = self.plugins[plugin_name]
         except KeyError:
-            raise http.Http404('A plugin with the requested name does not exist.')
+            raise http.Http404('A plugin with the requested name '
+                               'does not exist.')
         return plugin.model_view(request, self, rest_of_url)
 
     def main_view(self, request):
         easy_model = EasyModel(self.site, self.model)
-        html_snippets = mark_safe(u'\n'.join([p.model_index_html(request, self.model, self.site) for p in self.plugins.values()]))
-        return render_to_response('databrowse/model_detail.html', {
-            'model': easy_model,
-            'root_url': self.site.root_url,
-            'plugin_html': html_snippets,
-            })
+        html_snippets = mark_safe(
+            u'\n'.join([p.model_index_html(
+                request,
+                self.model,
+                self.site
+            ) for p in self.plugins.values()])
+        )
+        return render_to_response(
+            'databrowse/model_detail.html',
+            {
+                'model': easy_model,
+                'root_url': self.site.root_url,
+                'plugin_html': html_snippets,
+            }
+        )
 
 class DatabrowseSite(object):
     def __init__(self):
@@ -84,10 +94,12 @@ class DatabrowseSite(object):
 
         If a model is already registered, this will raise AlreadyRegistered.
         """
-        databrowse_class = options.pop('databrowse_class', DefaultModelDatabrowse)
+        databrowse_class = options.pop('databrowse_class',
+                                        DefaultModelDatabrowse)
         for model in model_list:
             if model in self.registry:
-                raise AlreadyRegistered('The model %s is already registered' % model.__name__)
+                raise AlreadyRegistered('The model %s is already registered' %
+                                        model.__name__)
             self.registry[model] = databrowse_class
 
     def unregister(self, *model_list):
@@ -98,7 +110,8 @@ class DatabrowseSite(object):
         """
         for model in model_list:
             if model not in self.registry:
-                raise NotRegistered('The model %s is not registered' % model.__name__)
+                raise NotRegistered('The model %s is not registered' %
+                                    model.__name__)
             del self.registry[model]
 
     def root(self, request, url):
@@ -119,20 +132,25 @@ class DatabrowseSite(object):
 
     def index(self, request):
         m_list = [EasyModel(self, m) for m in self.registry.keys()]
-        return render_to_response('databrowse/homepage.html', {'model_list': m_list, 'root_url': self.root_url})
+        return render_to_response(
+            'databrowse/homepage.html',
+            {'model_list': m_list, 'root_url': self.root_url}
+        )
 
     def model_page(self, request, app_label, model_name, rest_of_url=None):
         """
-        Handles the model-specific functionality of the databrowse site, delegating
-        to the appropriate ModelDatabrowse class.
+        Handles the model-specific functionality of the databrowse site,
+        delegating<to the appropriate ModelDatabrowse class.
         """
         model = models.get_model(app_label, model_name)
         if model is None:
-            raise http.Http404("App %r, model %r, not found." % (app_label, model_name))
+            raise http.Http404("App %r, model %r, not found." %
+                               (app_label, model_name))
         try:
             databrowse_class = self.registry[model]
         except KeyError:
-            raise http.Http404("This model exists but has not been registered with databrowse.")
+            raise http.Http404("This model exists but has not been registered "
+                               "with databrowse.")
         return databrowse_class(model, self).root(request, rest_of_url)
 
 site = DatabrowseSite()
@@ -142,5 +160,9 @@ from django.contrib.databrowse.plugins.objects import ObjectDetailPlugin
 from django.contrib.databrowse.plugins.fieldchoices import FieldChoicePlugin
 
 class DefaultModelDatabrowse(ModelDatabrowse):
-    plugins = {'objects': ObjectDetailPlugin(), 'calendars': CalendarPlugin(), 'fields': FieldChoicePlugin()}
+    plugins = {
+        'objects': ObjectDetailPlugin(),
+        'calendars': CalendarPlugin(),
+        'fields': FieldChoicePlugin()
+    }
 
