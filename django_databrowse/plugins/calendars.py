@@ -50,20 +50,29 @@ class CalendarPlugin(DatabrowsePlugin):
     def field_dict(self, model):
         """
         Helper function that returns a dictionary of all DateFields or
-        DateTimeFields in the given model. If self.field_names is set, it takes
-        take that into account when building the dictionary.
+        DateTimeFields in the given model. If self.field_names is set,
+        it takes that into account when building the dictionary.
         """
         if self.field_names is None:
-            return dict([(f.name, f) for f in model._meta.fields if isinstance(f, models.DateField)])
+            return dict([(f.name, f) for f in model._meta.fields
+                         if isinstance(f, models.DateField)])
         else:
-            return dict([(f.name, f) for f in model._meta.fields if isinstance(f, models.DateField) and f.name in self.field_names])
+            return dict([(f.name, f)
+                         for f in model._meta.fields
+                         if isinstance(f, models.DateField) and
+                            (f.name in self.field_names)])
 
     def model_index_html(self, request, model, site):
         fields = self.field_dict(model)
         if not fields:
             return u''
-        return mark_safe(u'<p class="filter"><strong>View calendar by:</strong> %s</p>' % \
-            u', '.join(['<a href="calendars/%s/">%s</a>' % (f.name, force_unicode(capfirst(f.verbose_name))) for f in fields.values()]))
+        return mark_safe(
+            u'<p class="filter"><strong>View calendar by:</strong> %s</p>' % \
+            u', '.join(
+                    ['<a href="calendars/%s/">%s</a>' %
+                     (f.name,force_unicode(capfirst(f.verbose_name)))
+                     for f in fields.values()])
+                )
 
     def urls(self, plugin_name, easy_instance_field):
         if isinstance(easy_instance_field.field, models.DateField):
@@ -87,7 +96,11 @@ class CalendarPlugin(DatabrowsePlugin):
             return self.homepage_view(request)
         url_bits = url.split('/')
         if url_bits[0] in self.fields:
-            return self.calendar_view(request, self.fields[url_bits[0]], *url_bits[1:])
+            return self.calendar_view(
+                request,
+                self.fields[url_bits[0]],
+                *url_bits[1:]
+            )
 
         raise http.Http404('The requested page does not exist.')
 
@@ -95,11 +108,14 @@ class CalendarPlugin(DatabrowsePlugin):
         easy_model = EasyModel(self.site, self.model)
         field_list = self.fields.values()
         field_list.sort(key=lambda k:k.verbose_name)
-        return render_to_response('databrowse/calendar_homepage.html', {
+        return render_to_response(
+            'databrowse/calendar_homepage.html',
+            {
                 'root_url': self.site.root_url,
                 'model': easy_model,
                 'field_list': field_list
-            })
+            }
+        )
 
     def calendar_view(self, request, field, year=None, month=None, day=None):
         easy_model = EasyModel(self.site, self.model)
