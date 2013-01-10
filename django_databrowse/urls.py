@@ -13,8 +13,14 @@ urlpatterns = patterns('',
 
     #(r'^([^/]+)/([^/]+)/calendars/(\w+)/$', views.calendar_main),
     #(r'^([^/]+)/([^/]+)/calendars/(\w+)/(\d{4})/$', views.calendar_year),
-    #(r'^([^/]+)/([^/]+)/calendars/(\w+)/(\d{4})/(\w{3})/$', views.calendar_month),
-    #(r'^([^/]+)/([^/]+)/calendars/(\w+)/(\d{4})/(\w{3})/(\d{1,2})/$', views.calendar_day),
+    #(
+    #    r'^([^/]+)/([^/]+)/calendars/(\w+)/(\d{4})/(\w{3})/$',
+    #    views.calendar_month
+    #),
+    #(
+    #    r'^([^/]+)/([^/]+)/calendars/(\w+)/(\d{4})/(\w{3})/(\d{1,2})/$',
+    #    views.calendar_day
+    #),
 
     #(r'^([^/]+)/([^/]+)/objects/(.*)/$', views.object_detail),
 )
