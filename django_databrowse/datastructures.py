@@ -157,7 +157,9 @@ class EasyInstance(object):
             yield {
                 'model': em,
                 'related_field': rel_object.field.verbose_name,
-                'object_list': [EasyInstance(em, i) for i in getattr(self.instance, rel_object.get_accessor_name()).all()],
+                'object_list': [EasyInstance(em, i) for i in
+                                getattr(self.instance,
+                                        rel_object.get_accessor_name()).all()],
                 }
 
 class EasyInstanceField(object):
@@ -181,11 +183,14 @@ class EasyInstanceField(object):
         if self.field.rel:
             if isinstance(self.field.rel, models.ManyToOneRel):
                 objs = getattr(self.instance.instance, self.field.name)
-            elif isinstance(self.field.rel, models.ManyToManyRel): # ManyToManyRel
-                return list(getattr(self.instance.instance, self.field.name).all())
+            elif isinstance(self.field.rel,
+                            models.ManyToManyRel): # ManyToManyRel
+                return list(getattr(self.instance.instance,
+                                    self.field.name).all())
         elif self.field.choices:
             objs = dict(self.field.choices).get(self.raw_value, EMPTY_VALUE)
-        elif isinstance(self.field, models.DateField) or isinstance(self.field, models.TimeField):
+        elif isinstance(self.field, models.DateField) or \
+                                    isinstance(self.field, models.TimeField):
             if self.raw_value:
                 if isinstance(self.field, models.DateTimeField):
                     objs = capfirst(formats.date_format(self.raw_value,
