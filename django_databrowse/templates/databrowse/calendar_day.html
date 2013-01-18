@@ -1,12 +1,13 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
-{% block title %}{{ model.verbose_name_plural|capfirst }} with {{ field.verbose_name }} {{ day|date:"F j, Y" }}{% endblock %}
+{% block title %}{{ model.verbose_name_plural|capfirst }} {% trans "with" %} {{ field.verbose_name }} {{ day|date:"F j, Y" }}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../../../../">Calendars</a> / <a href="../../../">By {{ field.verbose_name }}</a> / <a href="../../">{{ day|date:"Y" }}</a> / <a href="../">{{ day|date:"F" }}</a> / {{ day|date:"d" }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../../../../">{% trans "Calendars" %}</a> / <a href="../../../">{% trans "By" %} {{ field.verbose_name }}</a> / <a href="../../">{{ day|date:"Y" }}</a> / <a href="../">{{ day|date:"F" }}</a> / {{ day|date:"d" }}</div>
 
-<h1>{{ object_list.count }} {% if object_list.count|pluralize %}{{ model.verbose_name_plural }}{% else %}{{ model.verbose_name }}{% endif %} with {{ field.verbose_name }} on {{ day|date:"F j, Y" }}</h1>
+<h1>{{ object_list.count }} {% if object_list.count|pluralize %}{{ model.verbose_name_plural }}{% else %}{{ model.verbose_name }}{% endif %} {% trans "with" %} {{ field.verbose_name }} {% trans "on" %} {{ day|date:"F j, Y" }}</h1>
 
 <ul class="objectlist">
 {% for object in object_list %}
