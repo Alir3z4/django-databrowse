@@ -1,10 +1,11 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
 {% block title %}{{ object.model.verbose_name|capfirst }}: {{ object }}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ object.model.url }}">{{ object.model.verbose_name_plural|capfirst }}</a> / {{ object }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ object.model.url }}">{{ object.model.verbose_name_plural|capfirst }}</a> / {{ object }}</div>
 
 <h1>{{ object.model.verbose_name|capfirst }}: {{ object }}</h1>
 
@@ -25,7 +26,7 @@
 
 {% for related_object in object.related_objects %}
   <div class="related">
-  <h2>Appears in "{{ related_object.related_field }}" in the following {{ related_object.model.verbose_name_plural }}:</h2>
+  <h2>{% blocktrans with related_field=related_object.related_field verbose_name_plural=related_object.model.verbose_name_plural %}Appears in "{{ related_field }}" in the following {{ verbose_name_plural }}{% endblocktrans %}:</h2>
   {% if related_object.object_list %}
   <ul class="objectlist">
     {% for object in related_object.object_list %}
@@ -33,7 +34,7 @@
     {% endfor %}
   </ul>
   {% else %}
-  <p class="quiet">(None)</p>
+  <p class="quiet">{% trans "(None)" %}</p>
   {% endif %}
   </div>
 {% endfor %}
