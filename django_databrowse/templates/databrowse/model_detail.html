@@ -1,10 +1,11 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
 {% block title %}{{ model.verbose_name_plural|capfirst }}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / {{ model.verbose_name_plural|capfirst }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / {{ model.verbose_name_plural|capfirst }}</div>
 
 <h1>{{ model.objects.count }} {% if model.objects.count|pluralize %}{{ model.verbose_name_plural }}{% else %}{{ model.verbose_name }}{% endif %}</h1>
 
