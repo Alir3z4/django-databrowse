@@ -1,12 +1,13 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
-{% block title %}{{ field.verbose_name|capfirst }} calendar{% endblock %}
+{% block title %}{{ field.verbose_name|capfirst }} {% trans "calendar" %}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../">Calendars</a> / By {{ field.verbose_name }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../">{% trans "Calendars" %}</a> / {% trans "By" %} {{ field.verbose_name }}</div>
 
-<h1>{{ model.verbose_name_plural|capfirst }} by {{ field.verbose_name }}</h1>
+<h1>{{ model.verbose_name_plural|capfirst }} {% trans "by" %} {{ field.verbose_name }}</h1>
 
 <ul class="objectlist">
 {% for year in date_list %}
