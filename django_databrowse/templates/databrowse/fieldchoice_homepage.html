@@ -1,16 +1,15 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
-
-{% block title %}Browsable fields in {{ model.verbose_name_plural }}{% endblock %}
-
+{% block title %}{% blocktrans with verbose_name=model.verbose_name_plural %}Browsable fields in {{ verbose_name }}{% endblocktrans %}{% endblock %}
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / Fields</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / {% trans "Fields" %}</div>
 
-<h1>Browsable fields in {{ model.verbose_name_plural }}</h1>
+<h1>{% blocktrans with verbose_name=model.verbose_name_plural %}Browsable fields in {{ verbose_name }}{% endblocktrans %}</h1>
 
 <ul class="objectlist">
 {% for field in field_list %}
-<li class="{% cycle 'odd' 'even' %}"><a href="{{ field.name }}/">{{ model.verbose_name_plural|capfirst }} by {{ field.verbose_name }}</a></li>
+<li class="{% cycle 'odd' 'even' %}"><a href="{{ field.name }}/">{{ model.verbose_name_plural|capfirst }} {% trans "by" %} {{ field.verbose_name }}</a></li>
 {% endfor %}
 </ul>
 
