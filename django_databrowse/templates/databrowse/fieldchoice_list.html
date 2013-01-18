@@ -1,12 +1,13 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
-{% block title %}{{ model.verbose_name_plural|capfirst }} by {{ field.field.verbose_name }}{% endblock %}
+{% block title %}{{ model.verbose_name_plural|capfirst }} {% trans "by" %} {{ field.field.verbose_name }}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../">Fields</a> / By {{ field.field.verbose_name }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../">{% trans "Fields" %}</a> / {% trans "By" %} {{ field.field.verbose_name }}</div>
 
-<h1>{{ model.verbose_name_plural|capfirst }} by {{ field.field.verbose_name }}</h1>
+<h1>{{ model.verbose_name_plural|capfirst }} {% trans "by" %} {{ field.field.verbose_name }}</h1>
 
 <ul class="objectlist">
 {% for object in object_list %}
