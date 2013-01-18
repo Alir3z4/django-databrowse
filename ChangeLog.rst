@@ -1,4 +1,6 @@
-0000-00-00 Alireza Savand <alireza.savand@gmail.com>
+0.0 Alireza Savand <alireza.savand@gmail.com>
 ====================================================
+----
 
-    * Added ChangeLog
+* Added ChangeLog
+* Fixed #1: i18n in templates
