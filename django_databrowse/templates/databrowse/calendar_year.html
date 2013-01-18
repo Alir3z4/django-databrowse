@@ -1,12 +1,13 @@
+{% load i18n %}
 {% extends "databrowse/base_site.html" %}
 
-{% block title %}{{ model.verbose_name_plural|capfirst }} with {{ field.verbose_name }} in {{ year }}{% endblock %}
+{% block title %}{{ model.verbose_name_plural|capfirst }} {% trans "with" %} {{ field.verbose_name }} {% trans "in" %} {{ year }}{% endblock %}
 
 {% block content %}
 
-<div id="breadcrumbs"><a href="{{ root_url }}">Home</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../../">Calendars</a> / <a href="../">By {{ field.verbose_name }}</a> / {{ year }}</div>
+<div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / <a href="{{ model.url }}">{{ model.verbose_name_plural|capfirst }}</a> / <a href="../../">{% trans "Calendars" %}</a> / <a href="../">{% trans "By" %} {{ field.verbose_name }}</a> / {{ year }}</div>
 
-<h1>{{ model.verbose_name_plural|capfirst }} with {{ field.verbose_name }} in {{ year }}</h1>
+<h1>{{ model.verbose_name_plural|capfirst }} {% trans "with" %} {{ field.verbose_name }} {% trans "in" %} {{ year }}</h1>
 
 <ul class="objectlist">
 {% for month in date_list %}
