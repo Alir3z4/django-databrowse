@@ -18,7 +18,7 @@
 {% for value, url in field.urls %}
 {% if url %}<a href="{{ url }}">{% endif %}{{ value }}{% if url %}</a>{% endif %}{% if not forloop.last %}, {% endif %}
 {% endfor %}
-{% else %}None{% endif %}
+{% else %}{% trans "None" %}{% endif %}
 </td>
 </tr>
 {% endfor %}
