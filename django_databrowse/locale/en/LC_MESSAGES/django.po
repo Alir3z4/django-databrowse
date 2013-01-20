@@ -1,5 +1,5 @@
 # Copyright (C) 2006-2013 Alireza Savand, Django Foundation, Contributors
-# This file is distributed under the same license as the django-databrose package.
+# This file is distributed under the same license as the django-databrowse package.
 # FIRST AUTHOR <alireza.savand@gmail.com>, 2013.
 #
 #, fuzzy
@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2013-01-20 10:22-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Alireza Savand <alireza.savand@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: en_US <alireza.savand@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
