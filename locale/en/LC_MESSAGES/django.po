@@ -1,0 +1,130 @@
+# Copyright (C) 2006-2013 Alireza Savand, Django Foundation, Contributors
+# This file is distributed under the same license as the django-databrose package.
+# FIRST AUTHOR <alireza.savand@gmail.com>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 10:22-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Alireza Savand <alireza.savand@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: django_databrowse/templates/databrowse/base.html:57
+#: django_databrowse/templates/databrowse/homepage.html:4
+msgid "Databrowse"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_day.html:4
+#: django_databrowse/templates/databrowse/calendar_day.html:10
+#: django_databrowse/templates/databrowse/calendar_month.html:4
+#: django_databrowse/templates/databrowse/calendar_month.html:10
+#: django_databrowse/templates/databrowse/calendar_year.html:4
+#: django_databrowse/templates/databrowse/calendar_year.html:10
+#: django_databrowse/templates/databrowse/fieldchoice_detail.html:4
+#: django_databrowse/templates/databrowse/fieldchoice_detail.html:10
+msgid "with"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_day.html:8
+#: django_databrowse/templates/databrowse/calendar_homepage.html:8
+#: django_databrowse/templates/databrowse/calendar_main.html:8
+#: django_databrowse/templates/databrowse/calendar_month.html:8
+#: django_databrowse/templates/databrowse/calendar_year.html:8
+#: django_databrowse/templates/databrowse/choice_detail.html:8
+#: django_databrowse/templates/databrowse/choice_list.html:8
+#: django_databrowse/templates/databrowse/fieldchoice_detail.html:8
+#: django_databrowse/templates/databrowse/fieldchoice_homepage.html:6
+#: django_databrowse/templates/databrowse/fieldchoice_list.html:8
+#: django_databrowse/templates/databrowse/model_detail.html:8
+#: django_databrowse/templates/databrowse/object_detail.html:8
+msgid "Home"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_day.html:8
+#: django_databrowse/templates/databrowse/calendar_homepage.html:4
+#: django_databrowse/templates/databrowse/calendar_homepage.html:8
+#: django_databrowse/templates/databrowse/calendar_homepage.html:10
+#: django_databrowse/templates/databrowse/calendar_main.html:8
+#: django_databrowse/templates/databrowse/calendar_month.html:8
+#: django_databrowse/templates/databrowse/calendar_year.html:8
+msgid "Calendars"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_day.html:8
+#: django_databrowse/templates/databrowse/calendar_main.html:8
+#: django_databrowse/templates/databrowse/calendar_month.html:8
+#: django_databrowse/templates/databrowse/calendar_year.html:8
+#: django_databrowse/templates/databrowse/choice_detail.html:8
+#: django_databrowse/templates/databrowse/choice_list.html:8
+#: django_databrowse/templates/databrowse/fieldchoice_detail.html:8
+#: django_databrowse/templates/databrowse/fieldchoice_list.html:8
+msgid "By"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_day.html:10
+#: django_databrowse/templates/databrowse/calendar_month.html:10
+msgid "on"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_homepage.html:14
+#: django_databrowse/templates/databrowse/calendar_main.html:10
+#: django_databrowse/templates/databrowse/choice_detail.html:4
+#: django_databrowse/templates/databrowse/choice_detail.html:10
+#: django_databrowse/templates/databrowse/choice_list.html:4
+#: django_databrowse/templates/databrowse/choice_list.html:10
+#: django_databrowse/templates/databrowse/fieldchoice_homepage.html:12
+#: django_databrowse/templates/databrowse/fieldchoice_list.html:4
+#: django_databrowse/templates/databrowse/fieldchoice_list.html:10
+msgid "by"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_main.html:4
+msgid "calendar"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/calendar_month.html:4
+#: django_databrowse/templates/databrowse/calendar_year.html:4
+#: django_databrowse/templates/databrowse/calendar_year.html:10
+msgid "in"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/fieldchoice_detail.html:8
+#: django_databrowse/templates/databrowse/fieldchoice_homepage.html:6
+#: django_databrowse/templates/databrowse/fieldchoice_list.html:8
+msgid "Fields"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/fieldchoice_homepage.html:3
+#: django_databrowse/templates/databrowse/fieldchoice_homepage.html:8
+#, python-format
+msgid "Browsable fields in %(verbose_name)s"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/homepage.html:6
+msgid "homepage"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/homepage.html:17
+msgid "More"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/object_detail.html:21
+msgid "None"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/object_detail.html:29
+#, python-format
+msgid ""
+"Appears in \"%(related_field)s\" in the following %(verbose_name_plural)s"
+msgstr ""
+
+#: django_databrowse/templates/databrowse/object_detail.html:37
+msgid "(None)"
+msgstr ""
