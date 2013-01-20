@@ -1,3 +1,7 @@
 [main]
 host = https://www.transifex.com
 
+[django-databrowse.django_databrowse]
+file_filter = django_databrowse/locale/<lang>/LC_MESSAGES/django.po
+source_file = django_databrowse/locale/en/LC_MESSAGES/django.po
+source_lang = en
