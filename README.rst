@@ -2,6 +2,8 @@
 Django Databrowse
 =================
 
+.. contents:: Table of contents
+
 .. note::
 
     Extracted from `Django 1.4 since databrowse deprecation <https://docs.djangoproject.com/en/dev/releases/1.4/#django-contrib-databrowse>`_
