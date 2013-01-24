@@ -43,7 +43,7 @@ Then install it by running:
 
 
 How to use Databrowse
-=====================
+---------------------
 
 1. Point Django at the default Databrowse templates. There are two ways to
    do this:
@@ -87,7 +87,7 @@ How to use Databrowse
 4. Run the Django server and visit ``/databrowse/`` in your browser.
 
 Requiring user login
-====================
+---------------------
 
 You can restrict access to logged-in users with only a few extra lines of
 code. Simply add the following import to your URLconf::
