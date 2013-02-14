@@ -1,5 +1,6 @@
-{% load i18n %}
 {% extends "databrowse/base_site.html" %}
+{% load i18n %}
+
 {% block title %}{% blocktrans with verbose_name=model.verbose_name_plural %}Browsable fields in {{ verbose_name }}{% endblocktrans %}{% endblock %}
 {% block content %}
 
