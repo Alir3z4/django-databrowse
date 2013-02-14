@@ -155,9 +155,9 @@ class DatabrowseSite(object):
 
 site = DatabrowseSite()
 
-from django.contrib.databrowse.plugins.calendars import CalendarPlugin
-from django.contrib.databrowse.plugins.objects import ObjectDetailPlugin
-from django.contrib.databrowse.plugins.fieldchoices import FieldChoicePlugin
+from django_databrowse.plugins.calendars import CalendarPlugin
+from django_databrowse.plugins.objects import ObjectDetailPlugin
+from django_databrowse.plugins.fieldchoices import FieldChoicePlugin
 
 class DefaultModelDatabrowse(ModelDatabrowse):
     plugins = {
