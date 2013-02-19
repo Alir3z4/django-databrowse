@@ -7,6 +7,7 @@ from django.utils.text import capfirst
 from django.utils.encoding import smart_str, force_unicode
 from django.utils.safestring import mark_safe
 import urllib
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FieldChoicePlugin(DatabrowsePlugin):
     def __init__(self, field_filter=None):
@@ -96,26 +97,50 @@ class FieldChoicePlugin(DatabrowsePlugin):
         easy_field = easy_model.field(field.name)
         if value is not None:
             obj_list = easy_model.objects(**{field.name: value})
+        else:
+            obj_list = [v[field.name] for v in \
+            self.model._default_manager.distinct().order_by(field.name).\
+            values(field.name)]
+
+        # add paging
+        numitems = request.GET.get('items')
+        items_per_page = [25,50,100]
+        if numitems and numitems.isdigit() and int(numitems)>0:
+            paginator = Paginator(obj_list, numitems)
+        else:
+            # fall back to default
+            paginator = Paginator(obj_list, items_per_page[0])
+        
+        page = request.GET.get('page')
+        try:
+            obj_list_page = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            obj_list_page = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page.
+            obj_list_page = paginator.page(paginator.num_pages)
+        
+        if value is not None:
             return render_to_response(
                 'databrowse/fieldchoice_detail.html',
                 {
                     'root_url': self.site.root_url,
-                     'model': easy_model,
-                     'field': easy_field,
-                     'value': value,
-                     'object_list': obj_list
+                    'model': easy_model,
+                    'field': easy_field,
+                    'value': value,
+                    'object_list': obj_list_page,
+                    'items_per_page': items_per_page,
                 }
             )
-        obj_list = \
-            [v[field.name] for v in
-             self.model._default_manager.distinct().order_by(
-                                                field.name).values(field.name)]
+
         return render_to_response(
             'databrowse/fieldchoice_list.html',
             {
                 'root_url': self.site.root_url,
                 'model': easy_model,
                 'field': easy_field,
-                'object_list': obj_list
+                'object_list': obj_list_page,
+                'items_per_page': items_per_page,
             }
         )
