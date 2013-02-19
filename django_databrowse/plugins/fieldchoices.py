@@ -98,7 +98,9 @@ class FieldChoicePlugin(DatabrowsePlugin):
         if value is not None:
             obj_list = easy_model.objects(**{field.name: value})
         else:
-            obj_list = [v[field.name] for v in self.model._default_manager.distinct().order_by(field.name).values(field.name)]
+            obj_list = [v[field.name] for v in \
+            self.model._default_manager.distinct().order_by(field.name).\
+            values(field.name)]
 
         # add paging
         numitems = request.GET.get('items')
@@ -116,7 +118,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
             # If page is not an integer, deliver first page.
             obj_list_page = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
+            # If page is out of range (e.g. 9999), deliver last page.
             obj_list_page = paginator.page(paginator.num_pages)
         
         if value is not None:

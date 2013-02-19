@@ -36,7 +36,7 @@ def choice_detail(request, app_label, module_name, field_name,
         # If page is not an integer, deliver first page.
         obj_list_page = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
+        # If page is out of range (e.g. 9999), deliver last page.
         obj_list_page = paginator.page(paginator.num_pages)
 
     return render_to_response(
