@@ -3,6 +3,7 @@ from django.db import models
 from django_databrowse.datastructures import EasyModel
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class AlreadyRegistered(Exception):
     pass
@@ -69,12 +70,33 @@ class ModelDatabrowse(object):
                 self.site
             ) for p in self.plugins.values()])
         )
+        obj_list = easy_model.objects()
+        numitems = request.GET.get('items')
+        items_per_page = [25,50,100]
+        if numitems and numitems.isdigit() and int(numitems)>0:
+            paginator = Paginator(obj_list, numitems)
+        else:
+            # fall back to default
+            paginator = Paginator(obj_list, items_per_page[0])
+        
+        page = request.GET.get('page')
+        try:
+            obj_list_page = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            obj_list_page = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            obj_list_page = paginator.page(paginator.num_pages)
+
         return render_to_response(
             'databrowse/model_detail.html',
             {
                 'model': easy_model,
                 'root_url': self.site.root_url,
                 'plugin_html': html_snippets,
+                'object_list': obj_list_page,
+                'items_per_page': items_per_page,
             }
         )
 

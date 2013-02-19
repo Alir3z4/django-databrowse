@@ -7,14 +7,32 @@
 
 <div id="breadcrumbs"><a href="{{ root_url }}">{% trans "Home" %}</a> / {{ model.verbose_name_plural|capfirst }}</div>
 
-<h1>{{ model.objects.count }} {% if model.objects.count|pluralize %}{{ model.verbose_name_plural }}{% else %}{{ model.verbose_name }}{% endif %}</h1>
+<h1>{{ object_list.paginator.count }} {% if object_list.paginator.count|pluralize %}{{ model.verbose_name_plural }}{% else %}{{ model.verbose_name }}{% endif %}</h1>
 
 {{ plugin_html }}
 
 <ul class="objectlist">
-{% for object in model.objects %}
+{% for object in object_list %}
     <li class="{% cycle 'odd' 'even' %}"><a href="{{ object.url }}">{{ object }}</a></li>
 {% endfor %}
 </ul>
+
+<div class="pagination">
+    <span class="step-links">
+        <span class="current">
+          Page {{ object_list.number }} of <a href="?page={{ object_list.paginator.num_pages }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">{{ object_list.paginator.num_pages }}</a>
+        </span>
+        {% if object_list.has_other_pages %}|{% endif %}{% if object_list.has_previous %}| <a href="?page=1{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">&laquo; First</a> <a href="?page={{ object_list.previous_page_number }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">&lsaquo; Previous</a> {% endif %}{% if object_list.has_next %}| <a href="?page={{ object_list.next_page_number }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">Next &rsaquo;</a>{% endif %}
+        <br>
+        {% for per_page in items_per_page %}
+            {% ifequal object_list.paginator.per_page per_page %}
+                {{ per_page }}
+            {% else %}
+            <a href="?{% if object_list.number > 1 %}page={{ object_list.number }}&{% endif %}items={{ per_page }}">{{ per_page }}</a>
+            {% endifequal %}
+        {% endfor %}
+        items per page
+    </span>
+</div>
 
 {% endblock %}
