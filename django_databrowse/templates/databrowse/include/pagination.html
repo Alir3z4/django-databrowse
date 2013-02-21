@@ -1,0 +1,17 @@
+<div class="pagination">
+    <span class="step-links">
+        <span class="current">
+          {% blocktrans with number=object_list.number %}Page {{ number }} of{% endblocktrans %} <a href="?page={{ object_list.paginator.num_pages }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">{{ object_list.paginator.num_pages }}</a>
+        </span>
+        {% if object_list.has_other_pages %}|{% endif %}{% if object_list.has_previous %}| <a href="?page=1{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">&laquo; {% trans "First" %}</a> <a href="?page={{ object_list.previous_page_number }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">&lsaquo; {% trans "Previous" %}</a> {% endif %}{% if object_list.has_next %}| <a href="?page={{ object_list.next_page_number }}{% if object_list.paginator.per_page > items_per_page.0 %}&items={{ object_list.paginator.per_page }}{% endif %}">{% trans "Next" %} &rsaquo;</a>{% endif %}
+        <br>
+        {% for per_page in items_per_page %}
+            {% ifequal object_list.paginator.per_page per_page %}
+                {{ per_page }}
+            {% else %}
+                <a href="?{% if object_list.number > 1 %}page={{ object_list.number }}&{% endif %}items={{ per_page }}">{{ per_page }}</a>
+            {% endifequal %}
+        {% endfor %}
+        {% trans "items per page" %}
+    </span>
+</div>
