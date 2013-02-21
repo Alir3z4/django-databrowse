@@ -5,7 +5,7 @@ MY_EMAIL = 'alireza.savand@gmail.com'
 
 setup(
     name='django-databrowse',
-    version='1.0',
+    version='1.1',
     packages=['django_databrowse', 'django_databrowse.plugins'],
     package_dir={'django_databrowse': 'django_databrowse'},
     package_data={'django_databrowse': ['templates/databrowse/*']},
