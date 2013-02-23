@@ -30,7 +30,7 @@ So easily install it by ``pip``:
 Or by ``easy_install``
 ::
     
-    $ easy_install django-markwhat
+    $ easy_install django-databrowse
 
 Another way is by cloning ``django-databrowse``'s `git repo <https://github.com/Alir3z4/django-databrowse>`_ :::
     
