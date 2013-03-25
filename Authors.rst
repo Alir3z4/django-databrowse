@@ -1,3 +1,3 @@
-Django Foundation & Contributors
-Alireza Savand
-Stathis Kanterakis
+- Django Foundation & Contributors
+- Alireza Savand <alireza.savand@gmail.com>
+- Stathis Kanterakis
