@@ -18,11 +18,11 @@ introspecting your models.
 
 Installation
 ------------
-``django-databrowse`` is available on pypi:
+``django-databrowse`` is available on pypi
 
 http://pypi.python.org/pypi/django-databrowse
 
-So easily install it by ``pip``:
+So easily install it by ``pip``
 ::
     
     $ pip install django-databrowse
@@ -32,7 +32,7 @@ Or by ``easy_install``
     
     $ easy_install django-databrowse
 
-Another way is by cloning ``django-databrowse``'s `git repo <https://github.com/Alir3z4/django-databrowse>`_ :::
+Another way is by cloning ``django-databrowse``'s `git repo <https://github.com/Alir3z4/django-databrowse>`_ ::
     
     $ git clone git://github.com/Alir3z4/django-databrowse.git
 
