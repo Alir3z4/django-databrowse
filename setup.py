@@ -8,7 +8,8 @@ setup(
     version='1.1',
     packages=['django_databrowse', 'django_databrowse.plugins'],
     package_dir={'django_databrowse': 'django_databrowse'},
-    package_data={'django_databrowse': ['templates/databrowse/*']},
+    package_data={'django_databrowse': 
+        ['templates/databrowse/*.html','templates/databrowse/include/*.html']},
     provides=['django_databrowse'],
     include_package_data=True,
     url='http://pypi.python.org/pypi/django-databrowse',
