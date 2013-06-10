@@ -9,6 +9,7 @@ from django.utils.text import capfirst
 from django.utils.encoding import smart_unicode, smart_str, iri_to_uri
 from django.utils.safestring import mark_safe
 from django.db.models.query import QuerySet
+from django.core.exceptions import ObjectDoesNotExist
 
 EMPTY_VALUE = '(None)'
 DISPLAY_SIZE = 100
@@ -154,12 +155,18 @@ class EasyInstance(object):
             if rel_object.model not in self.model.model_list:
                 continue # Skip models that aren't in the model_list
             em = EasyModel(self.model.site, rel_object.model)
+            try:
+                rel_accessor = getattr(self.instance, rel_object.get_accessor_name())
+            except ObjectDoesNotExist:
+                continue               
+            if rel_object.field.rel.multiple:
+                object_list = [EasyInstance(em, i) for i in rel_accessor.all()]
+            else: # for one-to-one fields
+                object_list = [EasyInstance(em, rel_accessor)]
             yield {
                 'model': em,
                 'related_field': rel_object.field.verbose_name,
-                'object_list': [EasyInstance(em, i) for i in
-                                getattr(self.instance,
-                                        rel_object.get_accessor_name()).all()],
+                'object_list': object_list,
                 }
 
 class EasyInstanceField(object):

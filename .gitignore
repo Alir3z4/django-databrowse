@@ -1,5 +1,6 @@
 # IDE specific
 .idea/
+.spyderproject
 # file
 *.pyc
 manage.py
