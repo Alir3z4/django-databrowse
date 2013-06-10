@@ -1,7 +1,9 @@
-import django_databrowse
 from django.db import models
 from django.test import TestCase
+
+import django_databrowse
 from django_databrowse.datastructures import EasyInstance, EasyModel
+
 
 class SomeModel(models.Model):
     some_field = models.CharField(max_length=50)
@@ -23,8 +25,10 @@ class YetAnotherModel(models.Model):
     def __unicode__(self):
         return self.yet_another_field
 
+
 class SomeInheritedModel(SomeModel):
     special = models.CharField(max_length=30)
+
 
 class DatabrowseTests(TestCase):
 
@@ -61,8 +65,8 @@ class DatabrowseTests(TestCase):
 
     def test_model_inheritance(self):
         django_databrowse.site.register(SomeInheritedModel)
-        child = SomeInheritedModel.objects.create(some_field = 'hello',
-                                                  special = 'world')
+        child = SomeInheritedModel.objects.create(some_field='hello',
+                                                  special='world')
         ei = EasyInstance(EasyModel(django_databrowse.site,
                                     SomeModel), child)
         ei_child = EasyInstance(EasyModel(django_databrowse.site,
@@ -72,7 +76,7 @@ class DatabrowseTests(TestCase):
             ei_child.instance)
 
     def test_model_inheritance_no_child(self):
-        instance = SomeModel.objects.create(some_field = 'hello')
+        instance = SomeModel.objects.create(some_field='hello')
         ei = EasyInstance(EasyModel(django_databrowse.site, SomeModel),
                           instance)
         self.assertEqual(list(ei.related_objects()), [])
