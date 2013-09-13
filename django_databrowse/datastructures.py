@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 EMPTY_VALUE = '(None)'
 DISPLAY_SIZE = 100
 
+
 class EasyModel(object):
     def __init__(self, site, model):
         self.site = site
@@ -62,6 +63,7 @@ class EasyModel(object):
         return [EasyField(self, f) for f in (self.model._meta.fields +
                                              self.model._meta.many_to_many)]
 
+
 class EasyField(object):
     def __init__(self, easy_model, field):
         self.model, self.field = easy_model, field
@@ -105,6 +107,7 @@ class EasyChoice(object):
                               self.model.model._meta.module_name,
                               self.field.field.name,
                               iri_to_uri(self.value)))
+
 
 class EasyInstance(object):
     def __init__(self, easy_model, instance):
@@ -168,6 +171,7 @@ class EasyInstance(object):
                 'related_field': rel_object.field.verbose_name,
                 'object_list': object_list,
                 }
+
 
 class EasyInstanceField(object):
     def __init__(self, easy_model, instance, field):
@@ -260,6 +264,7 @@ class EasyInstanceField(object):
             lst = [(self.values()[0], None)]
         return lst
 
+
 class EasyQuerySet(QuerySet):
     """
     When creating (or cloning to) an `EasyQuerySet`, make sure to set the
@@ -273,4 +278,3 @@ class EasyQuerySet(QuerySet):
         c = super(EasyQuerySet, self)._clone(*args, **kwargs)
         c._easymodel = self._easymodel
         return c
-

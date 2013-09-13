@@ -5,11 +5,14 @@ from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 class AlreadyRegistered(Exception):
     pass
 
+
 class NotRegistered(Exception):
     pass
+
 
 class DatabrowsePlugin(object):
     def urls(self, plugin_name, easy_instance_field):
@@ -34,6 +37,7 @@ class DatabrowsePlugin(object):
         """
         raise NotImplementedError
 
+
 class ModelDatabrowse(object):
     plugins = {}
 
@@ -52,7 +56,7 @@ class ModelDatabrowse(object):
             return self.main_view(request)
         try:
             plugin_name, rest_of_url = url.split('/', 1)
-        except ValueError: # need more than 1 value to unpack
+        except ValueError:  # need more than 1 value to unpack
             plugin_name, rest_of_url = url, None
         try:
             plugin = self.plugins[plugin_name]
@@ -72,13 +76,13 @@ class ModelDatabrowse(object):
         )
         obj_list = easy_model.objects()
         numitems = request.GET.get('items')
-        items_per_page = [25,50,100]
-        if numitems and numitems.isdigit() and int(numitems)>0:
+        items_per_page = [25, 50, 100]
+        if numitems and numitems.isdigit() and int(numitems) > 0:
             paginator = Paginator(obj_list, numitems)
         else:
             # fall back to default
             paginator = Paginator(obj_list, items_per_page[0])
-        
+
         page = request.GET.get('page')
         try:
             obj_list_page = paginator.page(page)
@@ -100,9 +104,10 @@ class ModelDatabrowse(object):
             }
         )
 
+
 class DatabrowseSite(object):
     def __init__(self):
-        self.registry = {} # model_class -> databrowse_class
+        self.registry = {}  # model_class -> databrowse_class
         self.root_url = None
 
     def register(self, *model_list, **options):
@@ -143,7 +148,7 @@ class DatabrowseSite(object):
         `url` is the remainder of the URL -- e.g. 'comments/comment/'.
         """
         self.root_url = request.path[:len(request.path) - len(url)]
-        url = url.rstrip('/') # Trim trailing slash, if it exists.
+        url = url.rstrip('/')  # Trim trailing slash, if it exists.
 
         if url == '':
             return self.index(request)
@@ -181,10 +186,10 @@ from django_databrowse.plugins.calendars import CalendarPlugin
 from django_databrowse.plugins.objects import ObjectDetailPlugin
 from django_databrowse.plugins.fieldchoices import FieldChoicePlugin
 
+
 class DefaultModelDatabrowse(ModelDatabrowse):
     plugins = {
         'objects': ObjectDetailPlugin(),
         'calendars': CalendarPlugin(),
         'fields': FieldChoicePlugin()
     }
-
