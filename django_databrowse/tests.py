@@ -111,3 +111,34 @@ class EasyModelTest(TestCase):
     def test_fields(self):
         em = EasyModel(django_databrowse.site, SomeModel)
         self.assertIsInstance(em.fields(), list)
+
+
+class EasyFieldTest(TestCase):
+
+    def test_repr(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        field = EasyField(em, models.CharField(max_length=50, name="hello"))
+        self.assertEqual(field.__repr__(), '<EasyField for SomeModel.hello>')
+
+    def test_choices(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        em.site.root_url = "root/"
+        field = EasyField(
+            em,
+            models.CharField(max_length=2,
+                             choices=(("a", "azerty"),("q","querty"))
+                             )
+            )
+        self.assertEqual(len([f for f in field.choices()]), 2)
+
+    def test_urls(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        field = EasyField(
+            em,
+            models.CharField(max_length=2,
+                             choices=(("a", "azerty"),("q","querty")),
+                             name="hello"
+                             )
+            )
+        self.assertEqual(field.url(),
+                         u'root/django_databrowse/somemodel/hello/')
