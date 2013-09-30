@@ -122,7 +122,6 @@ class EasyFieldTest(TestCase):
 
     def test_choices(self):
         em = EasyModel(django_databrowse.site, SomeModel)
-        em.site.root_url = "root/"
         field = EasyField(
             em,
             models.CharField(max_length=2,
@@ -133,6 +132,7 @@ class EasyFieldTest(TestCase):
 
     def test_urls(self):
         em = EasyModel(django_databrowse.site, SomeModel)
+        em.site.root_url = "root/"
         field = EasyField(
             em,
             models.CharField(max_length=2,
@@ -142,3 +142,8 @@ class EasyFieldTest(TestCase):
             )
         self.assertEqual(field.url(),
                          u'root/django_databrowse/somemodel/hello/')
+
+        em = EasyModel(django_databrowse.site, SomeInheritedModel)
+        field = EasyField(em, models.ForeignKey(SomeModel))
+        self.assertEqual(field.url(),
+                         u'root/django_databrowse/someinheritedmodel/')
