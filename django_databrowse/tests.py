@@ -3,7 +3,7 @@ from django.test import TestCase
 
 import django_databrowse
 from django_databrowse.datastructures import (EasyInstance, EasyModel,
-                                              EasyQuerySet)
+                                              EasyQuerySet, EasyField)
 from django_databrowse.sites import DefaultModelDatabrowse
 
 
@@ -102,3 +102,12 @@ class EasyModelTest(TestCase):
     def test_manager(self):
         em = EasyModel(django_databrowse.site, SomeModel)
         self.assertIsInstance(em.objects(), EasyQuerySet)
+
+    def test_field(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        self.assertIsInstance(em.field("some_field"), EasyField)
+        self.assertEqual(em.field("hello"), None)
+
+    def test_fields(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        self.assertIsInstance(em.fields(), list)
