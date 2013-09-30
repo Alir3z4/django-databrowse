@@ -2,7 +2,8 @@ from django.db import models
 from django.test import TestCase
 
 import django_databrowse
-from django_databrowse.datastructures import EasyInstance, EasyModel
+from django_databrowse.datastructures import (EasyInstance, EasyModel,
+                                              EasyQuerySet)
 from django_databrowse.sites import DefaultModelDatabrowse
 
 
@@ -86,11 +87,18 @@ class DatabrowseTests(TestCase):
 class EasyModelTest(TestCase):
 
     def test_repr(self):
-        instance = SomeModel.objects.create(some_field='hello')
-        ei = EasyInstance(EasyModel(django_databrowse.site, SomeModel),
-                          instance)
-        self.assertEqual(ei.__repr__(), "<EasyInstance for SomeModel (1)>")
+        em = EasyModel(django_databrowse.site, SomeModel)
+        self.assertEqual(em.__repr__(), "<EasyModel for SomeModel>")
 
     def test_model_databrowse(self):
         em = EasyModel(django_databrowse.site, SomeModel)
         self.assertEqual(em.model_databrowse(), DefaultModelDatabrowse)
+
+    def test_url(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        em.site.root_url = "root/"
+        self.assertEqual(em.url(), u'root/django_databrowse/somemodel/')
+
+    def test_manager(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        self.assertIsInstance(em.objects(), EasyQuerySet)
