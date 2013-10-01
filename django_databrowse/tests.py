@@ -3,7 +3,8 @@ from django.test import TestCase
 
 import django_databrowse
 from django_databrowse.datastructures import (EasyInstance, EasyModel,
-                                              EasyQuerySet, EasyField)
+                                              EasyQuerySet, EasyField,
+                                              EasyChoice)
 from django_databrowse.sites import DefaultModelDatabrowse
 
 
@@ -147,3 +148,22 @@ class EasyFieldTest(TestCase):
         field = EasyField(em, models.ForeignKey(SomeModel))
         self.assertEqual(field.url(),
                          u'root/django_databrowse/someinheritedmodel/')
+
+
+class EasyChoiceTest(TestCase):
+
+    def test_repr(self):
+        em = EasyModel(django_databrowse.site, SomeModel)
+        field = models.CharField(max_length=2, name="Hello")
+        value, label = "a", "azerty"
+        ec = EasyChoice(em, field, value, label)
+        self.assertEqual(ec.__repr__(), "<EasyChoice for SomeModel.Hello>")
+
+class EasyInstanceTest(TestCase):
+
+    def test_repr(self):
+        instance = SomeModel.objects.create()
+        ei = EasyInstance(EasyModel(django_databrowse.site,
+                                    SomeModel), instance)
+        self.assertEqual(ei.__repr__(), "<EasyInstance for SomeModel (1)>")
+
