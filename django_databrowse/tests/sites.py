@@ -51,7 +51,7 @@ class DatabrowseTestsClient(TestCase):
     def tearDownClass(self):
         django_databrowse.site.unregister(SomeModel)
 
-    def test_root(self):
+    def test_urls(self):
         django_databrowse.site.register(SomeModel)
         response = Client().get('')
         self.assertEqual(response.status_code, 200)
@@ -60,4 +60,12 @@ class DatabrowseTestsClient(TestCase):
             EasyModel)
 
         response = Client().get('/django_databrowse/somemodel/')
+        self.assertEqual(response.status_code, 200)
+
+        response = Client().get('/django_databrowse/doesnotexistmodel/')
+        self.assertEqual(response.status_code, 404)
+        response = Client().get('/django_databrowse/something/somemodel/')
+        self.assertEqual(response.status_code, 404)
+        response = Client().get(
+            '/django_databrowse/somemodel/fields/some_field/')
         self.assertEqual(response.status_code, 200)
