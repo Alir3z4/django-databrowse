@@ -69,3 +69,6 @@ class DatabrowseTestsClient(TestCase):
         response = Client().get(
             '/django_databrowse/somemodel/fields/some_field/')
         self.assertEqual(response.status_code, 200)
+        response = Client().get(
+            '/django_databrowse/someothermodel/')
+        self.assertEqual(response.status_code, 404)
