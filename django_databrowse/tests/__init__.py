@@ -29,3 +29,4 @@ class SomeInheritedModel(SomeModel):
     special = models.CharField(max_length=30)
 
 from datastructures import *
+from sites import *

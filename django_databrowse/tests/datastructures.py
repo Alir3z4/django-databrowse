@@ -1,4 +1,4 @@
-from . import SomeModel, SomeOtherModel, SomeInheritedModel, YetAnotherModel
+from . import SomeModel, SomeInheritedModel
 
 from django.test import TestCase
 from django.db import models
@@ -6,62 +6,19 @@ import django_databrowse
 from django_databrowse.datastructures import (EasyInstance, EasyModel,
                                               EasyQuerySet, EasyField,
                                               EasyChoice)
+
 from django_databrowse.sites import DefaultModelDatabrowse
 
 
-class DatabrowseTests(TestCase):
-
-    def test_databrowse_register_unregister(self):
-        django_databrowse.site.register(SomeModel)
-        self.assertTrue(SomeModel in django_databrowse.site.registry)
-        django_databrowse.site.register(SomeOtherModel, YetAnotherModel)
-        self.assertTrue(SomeOtherModel in django_databrowse.site.registry)
-        self.assertTrue(YetAnotherModel in django_databrowse.site.registry)
-
-        self.assertRaisesMessage(
-            django_databrowse.sites.AlreadyRegistered,
-            'The model SomeModel is already registered',
-            django_databrowse.site.register, SomeModel, SomeOtherModel
-        )
-
-        django_databrowse.site.unregister(SomeOtherModel)
-        self.assertFalse(SomeOtherModel in django_databrowse.site.registry)
-        django_databrowse.site.unregister(SomeModel, YetAnotherModel)
-        self.assertFalse(SomeModel in django_databrowse.site.registry)
-        self.assertFalse(YetAnotherModel in django_databrowse.site.registry)
-
-        self.assertRaisesMessage(
-            django_databrowse.sites.NotRegistered,
-            'The model SomeModel is not registered',
-            django_databrowse.site.unregister, SomeModel, SomeOtherModel
-        )
-
-        self.assertRaisesMessage(
-            django_databrowse.sites.AlreadyRegistered,
-            'The model SomeModel is already registered',
-            django_databrowse.site.register, SomeModel, SomeModel
-        )
-
-    def test_model_inheritance(self):
-        django_databrowse.site.register(SomeInheritedModel)
-        child = SomeInheritedModel.objects.create(some_field='hello',
-                                                  special='world')
-        ei = EasyInstance(EasyModel(django_databrowse.site,
-                                    SomeModel), child)
-        ei_child = EasyInstance(EasyModel(django_databrowse.site,
-                                          SomeInheritedModel), child)
-        self.assertEqual(
-            ei.related_objects().next()['object_list'][0].instance,
-            ei_child.instance)
-
-    def test_model_inheritance_no_child(self):
-        instance = SomeModel.objects.create(some_field='hello')
-        ei = EasyInstance(EasyModel(django_databrowse.site, SomeModel),
-                          instance)
-        self.assertEqual(list(ei.related_objects()), [])
-
-
 class EasyModelTest(TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        django_databrowse.site.register(SomeModel)
+
+    @classmethod
+    def tearDownClass(self):
+        django_databrowse.site.unregister(SomeModel)
 
     def test_repr(self):
         em = EasyModel(django_databrowse.site, SomeModel)
@@ -88,6 +45,24 @@ class EasyModelTest(TestCase):
     def test_fields(self):
         em = EasyModel(django_databrowse.site, SomeModel)
         self.assertIsInstance(em.fields(), list)
+
+    def test_model_inheritance(self):
+        django_databrowse.site.register(SomeInheritedModel)
+        child = SomeInheritedModel.objects.create(some_field='hello',
+                                                  special='world')
+        ei = EasyInstance(EasyModel(django_databrowse.site,
+                                    SomeModel), child)
+        ei_child = EasyInstance(EasyModel(django_databrowse.site,
+                                          SomeInheritedModel), child)
+        self.assertEqual(
+            ei.related_objects().next()['object_list'][0].instance,
+            ei_child.instance)
+
+    def test_model_inheritance_no_child(self):
+        instance = SomeModel.objects.create(some_field='hello')
+        ei = EasyInstance(EasyModel(django_databrowse.site, SomeModel),
+                          instance)
+        self.assertEqual(list(ei.related_objects()), [])
 
 
 class EasyFieldTest(TestCase):
@@ -135,6 +110,7 @@ class EasyChoiceTest(TestCase):
         ec = EasyChoice(em, field, value, label)
         self.assertEqual(ec.__repr__(), "<EasyChoice for SomeModel.Hello>")
 
+
 class EasyInstanceTest(TestCase):
 
     def test_repr(self):
@@ -142,4 +118,3 @@ class EasyInstanceTest(TestCase):
         ei = EasyInstance(EasyModel(django_databrowse.site,
                                     SomeModel), instance)
         self.assertEqual(ei.__repr__(), "<EasyInstance for SomeModel (1)>")
-
