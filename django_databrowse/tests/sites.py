@@ -54,6 +54,10 @@ class DatabrowseTestsClient(TestCase):
     def test_root(self):
         django_databrowse.site.register(SomeModel)
         response = Client().get('')
+        self.assertEqual(response.status_code, 200)
         self.assertIsInstance(
             response.context['model_list'][0],
             EasyModel)
+
+        response = Client().get('/django_databrowse/somemodel/')
+        self.assertEqual(response.status_code, 200)
