@@ -1,6 +1,8 @@
 from django.test import TestCase
 import django_databrowse
 from . import SomeModel, SomeOtherModel, YetAnotherModel
+from django.test import Client
+from django_databrowse.datastructures import EasyModel
 
 
 class DatabrowseTests(TestCase):
@@ -39,3 +41,19 @@ class DatabrowseTests(TestCase):
             'The model SomeModel is already registered',
             django_databrowse.site.register, SomeModel, SomeModel
         )
+
+
+class DatabrowseTestsClient(TestCase):
+    """
+    Test the behavior of databrowse with a Client
+    """
+    @classmethod
+    def tearDownClass(self):
+        django_databrowse.site.unregister(SomeModel)
+
+    def test_root(self):
+        django_databrowse.site.register(SomeModel)
+        response = Client().get('')
+        self.assertIsInstance(
+            response.context['model_list'][0],
+            EasyModel)
