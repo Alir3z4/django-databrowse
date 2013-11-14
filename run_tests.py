@@ -1,6 +1,7 @@
 import os
 import sys
 from django.conf import settings
+from django.conf.urls import patterns, include, url
 
 DIR_NAME = os.path.dirname(__file__)
 settings.configure(
@@ -16,8 +17,12 @@ settings.configure(
         'django.contrib.sessions',
         'django.contrib.admin',
         'django_databrowse'
-    )
+    ),
+
+    ROOT_URLCONF='test_urls'
 )
+
+
 
 from django.test.simple import DjangoTestSuiteRunner
 test_runner = DjangoTestSuiteRunner(verbosity=1)
