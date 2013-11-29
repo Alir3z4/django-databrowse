@@ -13,7 +13,7 @@ setup(
     },
     provides=['django_databrowse'],
     include_package_data=True,
-    url='http://pypi.python.org/pypi/django-databrowse',
+    url='https://github.com/Alir3z4/django-databrowse',
     license=open('LICENSE').read(),
     author='Alireza Savand',
     author_email='alireza.savand@gmail.com',
