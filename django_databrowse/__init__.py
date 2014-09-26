@@ -4,4 +4,4 @@ from django_databrowse.sites import (DatabrowsePlugin, ModelDatabrowse,
 __ALL__ = [DatabrowsePlugin, ModelDatabrowse,
            DefaultModelDatabrowse, site]
 
-__version__ = (1, 2)
+__version__ = (2014, 9, 26)
