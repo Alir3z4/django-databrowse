@@ -1,4 +1,5 @@
 - Django Foundation & Contributors
 - Alireza Savand <alireza.savand@gmail.com>
+- Yohann Gabory <yohann.gabory@outscale.com>
 - Stathis Kanterakis
 - Thomas Sorrel <thomas@pandeiro.fr>
