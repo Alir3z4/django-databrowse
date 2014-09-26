@@ -1,9 +1,10 @@
 from django import http
-from django.db import models
-from django_databrowse.datastructures import EasyModel
+from django.db.models.loading import get_model
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django_databrowse.datastructures import EasyModel
 
 
 class AlreadyRegistered(Exception):
@@ -122,7 +123,7 @@ class DatabrowseSite(object):
         If a model is already registered, this will raise AlreadyRegistered.
         """
         databrowse_class = options.pop('databrowse_class',
-                                        DefaultModelDatabrowse)
+                                       DefaultModelDatabrowse)
         for model in model_list:
             if model in self.registry:
                 raise AlreadyRegistered('The model %s is already registered' %
