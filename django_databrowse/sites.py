@@ -169,7 +169,11 @@ class DatabrowseSite(object):
         Handles the model-specific functionality of the databrowse site,
         delegating<to the appropriate ModelDatabrowse class.
         """
-        model = models.get_model(app_label, model_name)
+        try:
+            model = get_model(app_label, model_name)
+        except LookupError:
+            model = None
+
         if model is None:
             raise http.Http404("App %r, model %r, not found." %
                                (app_label, model_name))
