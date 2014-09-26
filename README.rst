@@ -115,3 +115,18 @@ The final step is to create the login form required by
 `django.contrib.auth.views.login`. The
 `user authentication docs <https://docs.djangoproject.com/en/1.4/ref/contrib/auth>`_ provide full details and a
 sample template that can be used for this purpose.
+
+
+Tests
+-------------
+
+``django-databrowse`` has been tested Django 1.6 and later. To run the the tests:
+
+::
+   
+   $ python run_tests.py
+
+It's also available on travis-ci:
+
+https://travis-ci.org/Alir3z4/django-databrowse/
+
