@@ -1,3 +1,14 @@
+2014.9.26 2014.09.26
+====================
+----
+
+* Fix: Running tests against Django>=1.7.
+* Feature: Running travis-ci for multiple version of django.
+* Fix: Handle ``LookupError`` on getting models.
+* Feature: More documentation.
+* Feature: Change version numbering to date based.
+
+
 1.3 2013-11-30
 ==============
 ----
