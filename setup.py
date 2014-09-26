@@ -19,7 +19,7 @@ setup(
     author_email='alireza.savand@gmail.com',
     description='Databrowse is a Django application that lets you browse your data.',
     long_description=open('README.rst').read(),
-    install_requires=['django', ],
+    install_requires=['Django', ],
     keywords=[
         'django',
         'web',
