@@ -1,6 +1,7 @@
 # IDE specific
 .idea/
 .spyderproject
+.ropeproject
 # file
 *.pyc
 manage.py
