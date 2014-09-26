@@ -130,3 +130,16 @@ It's also available on travis-ci:
 
 https://travis-ci.org/Alir3z4/django-databrowse/
 
+
+Translations
+------------
+
+Currently ``English`` is only available language that is being packaged. If you would like to contribute
+in localization you can find ``django-databrowse`` project on Transifex as well:
+https://www.transifex.com/projects/p/django-databrowse/
+
+**Translation Status on Transifex**
+
+.. image:: https://www.transifex.com/projects/p/django-databrowse/resource/django_databrowse/chart/image_png
+   :alt: django-databrowse translation status on transifex
+   :target: https://www.transifex.com/projects/p/django-databrowse/
