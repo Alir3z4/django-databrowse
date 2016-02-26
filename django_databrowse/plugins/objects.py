@@ -22,7 +22,7 @@ class ObjectDetailPlugin(DatabrowsePlugin):
         except ObjectDoesNotExist, e:
             raise http.Http404('Id not found')
         except ValueError, e:
-            raise http.Http404('Invalid format key provide')
+            raise http.Http404('Invalid format key provided')
         return render_to_response(
             'databrowse/object_detail.html',
             {
