@@ -1,3 +1,9 @@
+2016.2.26 2016.02.26
+====================
+----
+
+* Fix: Adding error handling for any tinker that tries to insert random pk.
+
 2014.9.26 2014.09.26
 ====================
 ----
