@@ -24,13 +24,12 @@ settings.configure(
     MIDDLEWARE_CLASSES=[],
     ROOT_URLCONF='test_urls'
 )
-
-from django.test.simple import DjangoTestSuiteRunner
+from django.test.runner import DiscoverRunner
 
 if DJANGO_VERSION >= 1.7:
     django.setup()
 
-test_runner = DjangoTestSuiteRunner(verbosity=1)
+test_runner = DiscoverRunner(verbosity=1)
 failures = test_runner.run_tests(['django_databrowse', ])
 
 if failures:
