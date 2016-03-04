@@ -34,13 +34,13 @@ class EasyModel(object):
     def url(self):
         return mark_safe('%s%s/%s/' % (self.site.root_url,
                                        self.model._meta.app_label,
-                                       self.model._meta.module_name))
+                                       self.model._meta.model_name))
 
     def objects(self, **kwargs):
         return self.get_query_set().filter(**kwargs)
 
     def get_query_set(self):
-        easy_qs = self.model._default_manager.get_query_set().\
+        easy_qs = self.model._default_manager.get_queryset().\
                                                     _clone(klass=EasyQuerySet)
         easy_qs._easymodel = self
         return easy_qs
@@ -82,13 +82,13 @@ class EasyField(object):
             return mark_safe('%s%s/%s/%s/' %
                                     (self.model.site.root_url,
                                      self.model.model._meta.app_label,
-                                     self.model.model._meta.module_name,
+                                     self.model.model._meta.model_name,
                                      self.field.name))
         elif self.field.rel:
             return mark_safe('%s%s/%s/' %
                                 (self.model.site.root_url,
                                  self.model.model._meta.app_label,
-                                 self.model.model._meta.module_name))
+                                 self.model.model._meta.model_name))
 
 class EasyChoice(object):
     def __init__(self, easy_model, field, value, label):
@@ -104,7 +104,7 @@ class EasyChoice(object):
         return mark_safe('%s%s/%s/%s/%s/' %
                              (self.model.site.root_url,
                               self.model.model._meta.app_label,
-                              self.model.model._meta.module_name,
+                              self.model.model._meta.model_name,
                               self.field.field.name,
                               iri_to_uri(self.value)))
 
@@ -134,7 +134,7 @@ class EasyInstance(object):
         return mark_safe('%s%s/%s/objects/%s/' %
                          (self.model.site.root_url,
                           self.model.model._meta.app_label,
-                          self.model.model._meta.module_name,
+                          self.model.model._meta.model_name,
                           iri_to_uri(self.pk())))
 
     def fields(self):
@@ -242,7 +242,7 @@ class EasyInstanceField(object):
                     url = mark_safe('%s%s/%s/objects/%s/' %
                                             (self.model.site.root_url,
                                              m.model._meta.app_label,
-                                             m.model._meta.module_name,
+                                             m.model._meta.model_name,
                                              iri_to_uri(value._get_pk_val())))
                     lst.append((smart_unicode(value), url))
             else:
@@ -253,7 +253,7 @@ class EasyInstanceField(object):
                 url = mark_safe('%s%s/%s/fields/%s/%s/' %
                                         (self.model.site.root_url,
                                          self.model.model._meta.app_label,
-                                         self.model.model._meta.module_name,
+                                         self.model.model._meta.model_name,
                                          self.field.name,
                                          iri_to_uri(self.raw_value)))
                 lst.append((value, url))

@@ -6,16 +6,16 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # CHOICES #
 ###########
 
-def choice_list(request, app_label, module_name, field_name, models):
-    m, f = lookup_field(app_label, module_name, field_name, models)
+def choice_list(request, app_label, model_name, field_name, models):
+    m, f = lookup_field(app_label, model_name, field_name, models)
     return render_to_response(
         'databrowse/choice_list.html',
         {'model': m, 'field': f}
     )
 
-def choice_detail(request, app_label, module_name, field_name,
+def choice_detail(request, app_label, model_name, field_name,
                   field_val, models):
-    m, f = lookup_field(app_label, module_name, field_name, models)
+    m, f = lookup_field(app_label, model_name, field_name, models)
     try:
         label = dict(f.field.choices)[field_val]
     except KeyError:
