@@ -1,5 +1,10 @@
 from django import http
-from django.db.models.loading import get_model
+try:
+    from django.apps import apps
+    get_model = apps.get_model
+except ImportError, e:
+    from django.db.models import get_model
+
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -93,7 +98,6 @@ class ModelDatabrowse(object):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page.
             obj_list_page = paginator.page(paginator.num_pages)
-
         return render_to_response(
             'databrowse/model_detail.html',
             {
