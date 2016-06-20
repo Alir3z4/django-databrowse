@@ -40,8 +40,9 @@ class EasyModel(object):
         return self.get_query_set().filter(**kwargs)
 
     def get_query_set(self):
-        easy_qs = self.model._default_manager.get_queryset().\
-                                                    _clone(klass=EasyQuerySet)
+        qs = self.model._default_manager.get_queryset()
+        easy_qs = EasyQuerySet(model=qs.model, query=qs.query.clone(),
+                                           using=qs._db, hints=qs._hints)
         easy_qs._easymodel = self
         return easy_qs
 
