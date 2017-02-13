@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 ###########
@@ -10,7 +11,8 @@ def choice_list(request, app_label, model_name, field_name, models):
     m, f = lookup_field(app_label, model_name, field_name, models)
     return render_to_response(
         'databrowse/choice_list.html',
-        {'model': m, 'field': f}
+        {'model': m, 'field': f},
+        context_instance=RequestContext(request)
     )
 
 def choice_detail(request, app_label, model_name, field_name,
@@ -47,5 +49,5 @@ def choice_detail(request, app_label, model_name, field_name,
             'value': label,
             'object_list': obj_list_page,
             'items_per_page': items_per_page,
-        }
+        }, context_instance=RequestContext(request)
     )
