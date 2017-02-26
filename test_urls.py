@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import url
 import django_databrowse
-urlpatterns = patterns('',
-                       (r'^(.*)', django_databrowse.site.root)
-                       )
+
+urlpatterns = [
+    url(r'^(.*)', django_databrowse.site.root),
+]
