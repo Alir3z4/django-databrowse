@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django_databrowse.datastructures import EasyModel
 from django_databrowse.sites import DatabrowsePlugin
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 import urlparse
 
 class ObjectDetailPlugin(DatabrowsePlugin):
@@ -28,5 +29,5 @@ class ObjectDetailPlugin(DatabrowsePlugin):
             {
                 'object': obj,
                 'root_url': model_databrowse.site.root_url
-            }
+            }, context_instance=RequestContext(request)
         )

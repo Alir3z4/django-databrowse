@@ -3,6 +3,7 @@ from django.db import models
 from django_databrowse.datastructures import EasyModel
 from django_databrowse.sites import DatabrowsePlugin
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.utils.text import capfirst
 from django.utils.encoding import smart_str, force_unicode
 from django.utils.safestring import mark_safe
@@ -89,7 +90,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
                 'root_url': self.site.root_url,
                 'model': easy_model,
                 'field_list': field_list
-            }
+            }, context_instance=RequestContext(request)
         )
 
     def field_view(self, request, field, value=None):
@@ -131,7 +132,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
                     'value': value,
                     'object_list': obj_list_page,
                     'items_per_page': items_per_page,
-                }
+                }, context_instance=RequestContext(request)
             )
 
         return render_to_response(
@@ -142,5 +143,5 @@ class FieldChoicePlugin(DatabrowsePlugin):
                 'field': easy_field,
                 'object_list': obj_list_page,
                 'items_per_page': items_per_page,
-            }
+            }, context_instance=RequestContext(request)
         )
