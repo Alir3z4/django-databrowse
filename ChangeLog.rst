@@ -1,8 +1,11 @@
-2016.2.26 2016.02.26
+2016.3.16 2016.03.16
 ====================
 ----
 
 * Fix: Adding error handling for any tinker that tries to insert random pk.
+* Feature: Compatibility with Django up to version 1.10.
+* Feature: Add RequestContext to render_to_response calls
+
 
 2014.9.26 2014.09.26
 ====================
