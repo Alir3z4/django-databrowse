@@ -2,12 +2,16 @@ from django import http
 from django.db import models
 from django_databrowse.datastructures import EasyModel
 from django_databrowse.sites import DatabrowsePlugin
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.utils.text import capfirst
-from django.utils.encoding import smart_str, force_unicode
+from django.utils.encoding import smart_str, force_text
 from django.utils.safestring import mark_safe
 import urllib
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class FieldChoicePlugin(DatabrowsePlugin):
@@ -46,7 +50,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
             u'<p class="filter"><strong>View by:</strong> %s</p>' % \
             u', '.join(
                 ['<a href="fields/%s/">%s</a>' %
-                 (f.name, force_unicode(capfirst(f.verbose_name)))
+                 (f.name, force_text(capfirst(f.verbose_name)))
                     for f in fields.values()])
         )
 
@@ -57,7 +61,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
             return [mark_safe(u'%s%s/%s/%s/' % (
                 easy_instance_field.model.url(),
                 plugin_name, easy_instance_field.field.name,
-                urllib.quote(field_value, safe='')))]
+                quote(field_value, safe='')))]
 
     def model_view(self, request, model_databrowse, url):
         self.model, self.site = model_databrowse.model, model_databrowse.site
@@ -84,13 +88,13 @@ class FieldChoicePlugin(DatabrowsePlugin):
         easy_model = EasyModel(self.site, self.model)
         field_list = self.fields.values()
         field_list.sort(key=lambda k: k.verbose_name)
-        return render_to_response(
+        return render(request,
             'databrowse/fieldchoice_homepage.html',
             {
                 'root_url': self.site.root_url,
                 'model': easy_model,
                 'field_list': field_list
-            }, context_instance=RequestContext(request)
+            }
         )
 
     def field_view(self, request, field, value=None):
@@ -111,7 +115,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
         else:
             # fall back to default
             paginator = Paginator(obj_list, items_per_page[0])
-        
+
         page = request.GET.get('page')
         try:
             obj_list_page = paginator.page(page)
@@ -121,9 +125,9 @@ class FieldChoicePlugin(DatabrowsePlugin):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page.
             obj_list_page = paginator.page(paginator.num_pages)
-        
+
         if value is not None:
-            return render_to_response(
+            return render(request,
                 'databrowse/fieldchoice_detail.html',
                 {
                     'root_url': self.site.root_url,
@@ -132,10 +136,10 @@ class FieldChoicePlugin(DatabrowsePlugin):
                     'value': value,
                     'object_list': obj_list_page,
                     'items_per_page': items_per_page,
-                }, context_instance=RequestContext(request)
+                }
             )
 
-        return render_to_response(
+        return render(request,
             'databrowse/fieldchoice_list.html',
             {
                 'root_url': self.site.root_url,
@@ -143,5 +147,5 @@ class FieldChoicePlugin(DatabrowsePlugin):
                 'field': easy_field,
                 'object_list': obj_list_page,
                 'items_per_page': items_per_page,
-            }, context_instance=RequestContext(request)
+            }
         )
