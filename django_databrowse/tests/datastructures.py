@@ -55,7 +55,7 @@ class EasyModelTest(TestCase):
         ei_child = EasyInstance(EasyModel(django_databrowse.site,
                                           SomeInheritedModel), child)
         self.assertEqual(
-            ei.related_objects().next()['object_list'][0].instance,
+            next(ei.related_objects())['object_list'][0].instance,
             ei_child.instance)
 
     def test_model_inheritance_no_child(self):

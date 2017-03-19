@@ -22,7 +22,11 @@ def main():
         ),
         TEST_RUNNER='django.test.runner.DiscoverRunner',
         MIDDLEWARE_CLASSES=[],
-        ROOT_URLCONF='test_urls'
+        ROOT_URLCONF='test_urls',
+        TEMPLATES=[{
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'APP_DIRS': True,
+        }]
     )
 
     django.setup()
