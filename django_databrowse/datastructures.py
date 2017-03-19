@@ -111,7 +111,7 @@ class EasyChoice(object):
                               self.field.field.name,
                               iri_to_uri(self.value)))
 
-
+@python_2_unicode_compatible
 class EasyInstance(object):
     def __init__(self, easy_model, instance):
         self.model, self.instance = easy_model, instance
@@ -121,7 +121,6 @@ class EasyInstance(object):
                          (self.model.model._meta.object_name,
                           self.instance._get_pk_val()))
 
-    @python_2_unicode_compatible
     def __str__(self):
         val = smart_text(self.instance)
         if len(val) > DISPLAY_SIZE:
