@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -9,10 +9,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def choice_list(request, app_label, model_name, field_name, models):
     m, f = lookup_field(app_label, model_name, field_name, models)
-    return render_to_response(
+    return render(request,
         'databrowse/choice_list.html',
         {'model': m, 'field': f},
-        context_instance=RequestContext(request)
     )
 
 def choice_detail(request, app_label, model_name, field_name,
@@ -30,7 +29,7 @@ def choice_detail(request, app_label, model_name, field_name,
     else:
         # fall back to default
         paginator = Paginator(obj_list, items_per_page[0])
-    
+
     page = request.GET.get('page')
     try:
         obj_list_page = paginator.page(page)
@@ -41,7 +40,7 @@ def choice_detail(request, app_label, model_name, field_name,
         # If page is out of range (e.g. 9999), deliver last page.
         obj_list_page = paginator.page(paginator.num_pages)
 
-    return render_to_response(
+    return render(request,
         'databrowse/choice_detail.html',
         {
             'model': m,
@@ -49,5 +48,5 @@ def choice_detail(request, app_label, model_name, field_name,
             'value': label,
             'object_list': obj_list_page,
             'items_per_page': items_per_page,
-        }, context_instance=RequestContext(request)
+        }
     )

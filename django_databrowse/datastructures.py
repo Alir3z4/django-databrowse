@@ -6,10 +6,12 @@ convenience functionality and permalink functions for the databrowse app.
 from django.db import models
 from django.utils import formats
 from django.utils.text import capfirst
-from django.utils.encoding import smart_unicode, smart_str, iri_to_uri
+from django.utils.encoding import smart_text, smart_text, iri_to_uri
 from django.utils.safestring import mark_safe
 from django.db.models.query import QuerySet
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.encoding import python_2_unicode_compatible
+
 
 EMPTY_VALUE = '(None)'
 DISPLAY_SIZE = 100
@@ -25,7 +27,7 @@ class EasyModel(object):
 
     def __repr__(self):
         return '<EasyModel for %s>' % \
-               smart_str(self.model._meta.object_name)
+               smart_text(self.model._meta.object_name)
 
     def model_databrowse(self):
         "Returns the ModelDatabrowse class for this model."
@@ -70,7 +72,7 @@ class EasyField(object):
         self.model, self.field = easy_model, field
 
     def __repr__(self):
-        return smart_str(u'<EasyField for %s.%s>' %
+        return smart_text(u'<EasyField for %s.%s>' %
                                         (self.model.model._meta.object_name,
                                          self.field.name))
 
@@ -97,7 +99,7 @@ class EasyChoice(object):
         self.value, self.label = value, label
 
     def __repr__(self):
-        return smart_str(u'<EasyChoice for %s.%s>' %
+        return smart_text(u'<EasyChoice for %s.%s>' %
                                     (self.model.model._meta.object_name,
                                      self.field.name))
 
@@ -109,24 +111,21 @@ class EasyChoice(object):
                               self.field.field.name,
                               iri_to_uri(self.value)))
 
-
+@python_2_unicode_compatible
 class EasyInstance(object):
     def __init__(self, easy_model, instance):
         self.model, self.instance = easy_model, instance
 
     def __repr__(self):
-        return smart_str(u'<EasyInstance for %s (%s)>' %
+        return smart_text(u'<EasyInstance for %s (%s)>' %
                          (self.model.model._meta.object_name,
                           self.instance._get_pk_val()))
 
-    def __unicode__(self):
-        val = smart_unicode(self.instance)
+    def __str__(self):
+        val = smart_text(self.instance)
         if len(val) > DISPLAY_SIZE:
             return val[:DISPLAY_SIZE] + u'...'
         return val
-
-    def __str__(self):
-        return self.__unicode__().encode('utf-8')
 
     def pk(self):
         return self.instance._get_pk_val()
@@ -153,16 +152,24 @@ class EasyInstance(object):
         EasyInstance's model as a ForeignKey or ManyToManyField, along with
         lists of related objects.
         """
-        for rel_object in \
-            self.model.model._meta.get_all_related_objects() +\
-            self.model.model._meta.get_all_related_many_to_many_objects():
+
+        related_objects = [
+            f for f in self.model.model._meta.get_fields()
+            if (f.one_to_many or f.one_to_one)
+            and f.auto_created and not f.concrete
+        ]
+        related_m2m = [
+            f for f in self.model.model._meta.get_fields(include_hidden=True)
+            if f.many_to_many and f.auto_created
+        ]
+        for rel_object in related_objects + related_m2m:
             if rel_object.model not in self.model.model_list:
                 continue # Skip models that aren't in the model_list
             em = EasyModel(self.model.site, rel_object.model)
             try:
                 rel_accessor = getattr(self.instance, rel_object.get_accessor_name())
             except ObjectDoesNotExist:
-                continue               
+                continue
             if rel_object.field.rel.multiple:
                 object_list = [EasyInstance(em, i) for i in rel_accessor.all()]
             else: # for one-to-one fields
@@ -180,7 +187,7 @@ class EasyInstanceField(object):
         self.raw_value = getattr(instance.instance, field.name)
 
     def __repr__(self):
-        return smart_str(u'<EasyInstanceField for %s.%s>' %
+        return smart_text(u'<EasyInstanceField for %s.%s>' %
                          (self.model.model._meta.object_name,
                           self.field.name))
 
@@ -245,7 +252,7 @@ class EasyInstanceField(object):
                                              m.model._meta.app_label,
                                              m.model._meta.model_name,
                                              iri_to_uri(value._get_pk_val())))
-                    lst.append((smart_unicode(value), url))
+                    lst.append((smart_text(value), url))
             else:
                 lst = [(value, None) for value in self.values()]
         elif self.field.choices:
