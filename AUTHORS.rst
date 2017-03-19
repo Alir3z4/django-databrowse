@@ -3,3 +3,4 @@
 - Yohann Gabory <yohann.gabory@outscale.com>
 - Stathis Kanterakis
 - Thomas Sorrel <thomas@pandeiro.fr>
+- Martín Gaitán <gaitan@gmail.com>
