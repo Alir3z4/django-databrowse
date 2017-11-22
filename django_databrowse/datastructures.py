@@ -165,7 +165,7 @@ class EasyInstance(object):
         for rel_object in related_objects + related_m2m:
             if rel_object.model not in self.model.model_list:
                 continue # Skip models that aren't in the model_list
-            em = EasyModel(self.model.site, rel_object.model)
+            em = EasyModel(self.model.site, rel_object.related_model)
             try:
                 rel_accessor = getattr(self.instance, rel_object.get_accessor_name())
             except ObjectDoesNotExist:
