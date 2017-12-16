@@ -26,7 +26,7 @@
 
 {% for related_object in object.related_objects %}
   <div class="related">
-  <h2>{% blocktrans with related_field=related_object.related_field verbose_name_plural=related_object.model.verbose_name_plural %}Appears in "{{ related_field }}" in the following {{ verbose_name_plural }}{% endblocktrans %}:</h2>
+  <h2>{% blocktrans with related_field=related_object.related_field verbose_name_plural=related_object.model.verbose_name_plural %}Related to the following {{ verbose_name_plural }}, as "{{ related_field }}"{% endblocktrans %}:</h2>
   {% if related_object.object_list %}
   <ul class="objectlist">
     {% for object in related_object.object_list %}
