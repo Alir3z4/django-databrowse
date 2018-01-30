@@ -86,7 +86,7 @@ class FieldChoicePlugin(DatabrowsePlugin):
 
     def homepage_view(self, request):
         easy_model = EasyModel(self.site, self.model)
-        field_list = self.fields.values()
+        field_list = list(self.fields.values())
         field_list.sort(key=lambda k: k.verbose_name)
         return render(request,
             'databrowse/fieldchoice_homepage.html',
