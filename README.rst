@@ -143,3 +143,12 @@ https://www.transifex.com/projects/p/django-databrowse/
 .. image:: https://www.transifex.com/projects/p/django-databrowse/resource/django_databrowse/chart/image_png
    :alt: django-databrowse translation status on transifex
    :target: https://www.transifex.com/projects/p/django-databrowse/
+   
+
+Releasing
+----------
+
+* To make a release, first update the changelog with all the changes in the new release.
+* Tag the git repository with the release version.
+* Upload to PyPI.
+* Update https://github.com/Alir3z4/django-databrowse/releases.
